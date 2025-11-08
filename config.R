@@ -78,7 +78,7 @@ get_gcu_config <- function() {
     
     # App Deployment Configuration
     deployment = list(
-      app_name = "gcubaseball",
+      app_name = "gcubaseball1",
       title = "GCU Baseball Dashboard"
     ),
     
@@ -384,6 +384,7 @@ get_harvard_config <- function() {
     
     # Admin Configuration (from Harvard app.R)
     admin_emails = c(
+      "jgaynor@pitchingcoachu.com",
       "nathancole@fas.harvard.edu",
       "jeffrey_kane@fas.harvard.edu", 
       "mslattery@fas.harvard.edu",
@@ -405,7 +406,7 @@ get_harvard_config <- function() {
     
     # App Deployment Configuration
     deployment = list(
-      app_name = "harvardbaseball",
+      app_name = "harvardbaseball1",
       title = "Harvard Baseball Dashboard"
     ),
     
