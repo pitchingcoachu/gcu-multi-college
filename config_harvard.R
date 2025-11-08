@@ -7,7 +7,7 @@ get_harvard_config <- function() {
     school_code = "HARVARD",
     school_name = "Harvard University",
     team_name = "Crimson",
-    app_name = "harvardbaseball",
+    app_name = "harvardbaseball1",
     
     # Logo files (in www/ directory)
     primary_logo = "Harvardlogo.png",
@@ -15,6 +15,7 @@ get_harvard_config <- function() {
     
     # Admin emails (from Harvard app.R)
     admin_emails = c(
+      "jgaynor@pitchingcoachu.com",
       "nathancole@fas.harvard.edu",
       "jeffrey_kane@fas.harvard.edu", 
       "mslattery@fas.harvard.edu",
@@ -50,7 +51,7 @@ get_harvard_config <- function() {
     
     # Deployment settings  
     deployment = list(
-      app_name = "harvardbaseball",
+      app_name = "harvardbaseball1",
       description = "Harvard University Baseball Analytics Dashboard"
     )
   )

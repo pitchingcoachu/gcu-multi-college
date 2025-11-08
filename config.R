@@ -389,6 +389,7 @@ get_harvard_config <- function() {
     
     # Admin Configuration (from Harvard app.R)
     admin_emails = c(
+      "jgaynor@pitchingcoachu.com",
       "nathancole@fas.harvard.edu",
       "jeffrey_kane@fas.harvard.edu", 
       "mslattery@fas.harvard.edu",
@@ -473,6 +474,7 @@ get_harvard_config <- function() {
     )
   )
 }
+<<<<<<< HEAD
 # =============================================================================
 # VMI CONFIGURATION  
 # =============================================================================
@@ -916,3 +918,5 @@ get_unm_config <- function() {
     )
   )
 }
+=======
+>>>>>>> 2c6911c55b748cdb6596b9c86f95adf08d7f6ba2
