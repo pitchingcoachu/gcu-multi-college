@@ -40,16 +40,16 @@ FTP_HOST <- config$ftp$host
 FTP_USER <- config$ftp$username
 FTP_PASS <- config$ftp$password
 
-cat("Connecting to FTP server:", FTP_HOST, "as user:", FTP_USER, "\n")
-cat("School-specific data directory:", LOCAL_DATA_DIR, "\n")
-cat("  - Practice data:", LOCAL_PRACTICE_DIR, "\n")
-cat("  - V3 data:", LOCAL_V3_DIR, "\n")
-
 # School-specific data directories  
 SCHOOL_CODE <- config$school_code
 LOCAL_DATA_DIR      <- file.path("data", tolower(SCHOOL_CODE))
 LOCAL_PRACTICE_DIR  <- file.path(LOCAL_DATA_DIR, "practice")
 LOCAL_V3_DIR        <- file.path(LOCAL_DATA_DIR, "v3")
+
+cat("Connecting to FTP server:", FTP_HOST, "as user:", FTP_USER, "\n")
+cat("School-specific data directory:", LOCAL_DATA_DIR, "\n")
+cat("  - Practice data:", LOCAL_PRACTICE_DIR, "\n")
+cat("  - V3 data:", LOCAL_V3_DIR, "\n")
 
 # Ensure data directories exist
 dir.create(LOCAL_DATA_DIR, recursive = TRUE, showWarnings = FALSE)
@@ -341,7 +341,7 @@ deduplicate_files <- function() {
 
 # Main sync function
 main_sync <- function() {
-  cat("Starting data sync for", config$school_name %||% "Unknown School", "at", as.character(Sys.time()), "\n")
+  cat("Starting data sync for", ifelse(is.null(config$school_name), "Unknown School", config$school_name), "at", as.character(Sys.time()), "\n")
   
   start_time <- Sys.time()
   
