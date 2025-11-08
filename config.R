@@ -28,6 +28,7 @@ load_school_config <- function(school_code = NULL) {
   # Load the appropriate configuration
   config <- switch(school_code,
     "GCU" = get_gcu_config(),
+    "HARVARD" = get_harvard_config(),
     "TEMPLATE" = get_template_config(),
     {
       warning("Unknown school code: ", school_code, ". Using GCU config as fallback.")
@@ -365,4 +366,105 @@ is_admin_user <- function(email, config = NULL) {
     config <- get_config()
   }
   !is.na(email) && email %in% config$admin_emails
+}
+
+# =============================================================================
+# HARVARD UNIVERSITY CONFIGURATION  
+# =============================================================================
+
+get_harvard_config <- function() {
+  list(
+    # School Identity
+    school_code = "HARVARD",
+    school_name = "Harvard University",
+    team_name = "Harvard Crimson",
+    
+    # Team Code for filtering (if needed)
+    team_code = "",  # Blank = no filter
+    
+    # Admin Configuration (from Harvard app.R)
+    admin_emails = c(
+      "nathancole@fas.harvard.edu",
+      "jeffrey_kane@fas.harvard.edu", 
+      "mslattery@fas.harvard.edu",
+      "cleaden@seas.harvard.edu"
+    ),
+    
+    # Notes API Configuration
+    notes_api = list(
+      url = "https://script.google.com/macros/s/AKfycbwuftWhRZGV7f1lWFJnC5mBcxaXh7P7Xhlc7_Lvr5r6ZO_GYKbv6YxCp7B0AXsvCKY0/exec",
+      token = "Harvardbaseball"
+    ),
+    
+    # FTP Configuration for Data Sync (from Harvard automated_data_sync.R)
+    ftp = list(
+      host = "ftp.trackmanbaseball.com",
+      username = "Harvard",
+      password = "3ucALn8Gqy"
+    ),
+    
+    # App Deployment Configuration
+    deployment = list(
+      app_name = "harvardbaseball",
+      title = "Harvard Baseball Dashboard"
+    ),
+    
+    # Visual Configuration
+    branding = list(
+      primary_logo = "Harvardlogo.png",     # Harvard logo
+      secondary_logo = "PCUlogo.png",       # PCU logo (right side)
+      navbar_theme = "inverse",             # Bootstrap navbar theme
+      primary_color = "#A51C30",           # Harvard Crimson
+      secondary_color = "#ffffff",         # White
+      accent_color = "#f5f5f5"            # Light gray
+    ),
+    
+    # Player Lists - Team Pitchers (sample from Harvard lookup table)
+    allowed_pitchers = c(
+      "Abler, Andrew",
+      "Alagheband, Luca", 
+      "Burns, Will",
+      "Bergsma, Charley",
+      "Chen, Jason",
+      "Clark, Jack",
+      "Cleary, Charlie",
+      "Donovan, Brendan",
+      "Gochman, Jake"
+    ),
+    
+    # Player Lists - Team Position Players  
+    allowed_hitters = c(
+      "Abler, Andrew",
+      "Burns, Will",
+      "Chen, Jason", 
+      "Clark, Jack",
+      "Donovan, Brendan",
+      "Gochman, Jake"
+    ),
+    
+    # Player Lists - Catchers
+    allowed_catchers = c(
+      "Burns, Will",
+      "Chen, Jason"
+    ),
+    
+    # Camp Participants (can be empty if no camps)
+    camp_participants = c(),
+    
+    # Data Processing Configuration
+    data_config = list(
+      # Date filtering - start date for data inclusion
+      start_date = as.Date("2025-10-20"),
+      
+      # CSV exclusion patterns (files to skip during sync)
+      csv_exclusions = c("playerpositioning"),
+      
+      # Required data columns for validation
+      required_columns = c("Date", "Pitcher", "TaggedPitchType", "RelSpeed"),
+      
+      # Data quality thresholds
+      min_velocity = 60,    # Minimum velocity for valid pitch
+      max_velocity = 120    # Maximum velocity for valid pitch
+    )
+  )
 }
