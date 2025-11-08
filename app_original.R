@@ -1,9 +1,6 @@
 # app.R
 # Shiny pitching report with per-player privacy + admin view + customized Stuff+ metric per pitch type
 
-
-# Initialize multi-college configuration system
-source("init.R", local = FALSE)
 library(shiny)
 library(dplyr)
 library(DT)
@@ -21,7 +18,7 @@ library(digest)
 options(shiny.maxRequestSize = 50 * 1024^2)
 
 # Optional team scoping: blank = no filter
-# Team code is now loaded from configuration system in init.R
+if (!exists("TEAM_CODE", inherits = TRUE)) TEAM_CODE <- ""
 
 # ---- Heatmap constants and functions for Player Plans ----
 HEAT_BINS <- 6
@@ -711,8 +708,8 @@ js_sort <-
   paste0("}")
 
 # ---- Notes API config ----
-# Notes API configuration is now loaded from school configuration in init.R
-
+NOTES_API_URL   <- "https://script.google.com/macros/s/AKfycbwuftWhRZGV7f1lWFJnC5mBcxaXh7P7Xhlc7_Lvr5r6ZO_GYKbv6YxCp7B0AXsvCKY0/exec"
+NOTES_API_TOKEN <- "GCUbaseball"
 
 # small helper
 # Replace the old %or% with this scalar-safe version
@@ -2922,10 +2919,64 @@ catcher_map <- setNames(raw_catchers, catch_display)
 
 
 # ==== PITCHERS-ONLY WHITELIST ====
-# ==== PLAYER WHITELISTS ====
-# Player lists are now loaded from school configuration in init.R
-# Configuration system provides ALLOWED_PITCHERS and ALLOWED_CAMPERS
+ALLOWED_PITCHERS <- c(
+  "Lee, Aidan",
+  "Limas, Jacob",
+  "Higginbottom, Elijah",
+  "Cunnings, Cam",
+  "Moeller, Luke",
+  "Smith, Jace",
+  "Frey, Chase",
+  "Ahern, Garrett",
+  "McGuire, Tommy",
+  "Robb, Nicholas",
+  "Guerrero, JT",
+  "Gregory, Billy",
+  "Penzkover, Gunnar",
+  "Lewis, JT",
+  "Kiemele, Cody",
+  "Cohen, Andrew",
+  "Lyon, Andrew",
+  "Johns, Tanner",
+  "Toney, Brock",
+  "Sloan, Landon",
+  "Key, Chance",
+  "Orr, Dillon"
+)
+
 # CAMPS SUITE - Allowed campers for camps module
+ALLOWED_CAMPERS <- c(
+  "Bowman, Brock",
+  "Daniels, Tyke",
+  "Pearson, Blake",
+  "Rodriguez, Josiah",
+  "James, Brody",
+  "Nevarez, Matthew",
+  "Nunes, Nolan",
+  "Parks, Jaeden",
+  "Hill, Grant",
+  "McGinnis, Ayden",
+  "Morton, Ryker",
+  "McGuire, John",
+  "Willson, Brandon",
+  "Lauterbach, Camden",
+  "Turnquist, Dylan",
+  "Bournonville, Tanner",
+  "Evans, Lincoln",
+  "Gnirk, Will",
+  "Mann, Tyson",
+  "Neneman, Chase",
+  "Warmus, Joaquin",
+  "Kapadia, Taylor",
+  "Stoner, Timothy",
+  "Bergloff, Cameron",
+  "Hamm, Jacob",
+  "Hofmeister, Ben",
+  "Moo, Eriksen",
+  "Peltz, Zayden",
+  "Huff, Tyler",
+  "Moseman, Cody"
+)
 
 `%in_ci%` <- function(x, y) tolower(x) %in% tolower(y)
 
@@ -2946,10 +2997,20 @@ pitch_data_pitching <- pitch_data %>%
   )
 
 # Accept either "Last, First" or "First Last" in ALLOWED_PITCHERS
-# ==== PLAYER WHITELISTS ====
-# Player lists are now loaded from school configuration in init.R
-# Configuration system provides ALLOWED_PITCHERS and ALLOWED_CAMPERS
+ALLOWED_PITCHERS_DL <- unique(c(
+  ALLOWED_PITCHERS,
+  ifelse(grepl(",", ALLOWED_PITCHERS),
+         paste0(trimws(sub(".*,", "", ALLOWED_PITCHERS)), " ", trimws(sub(",.*", "", ALLOWED_PITCHERS))),
+         ALLOWED_PITCHERS)
+))
+
 # Also include ALLOWED_CAMPERS in the pitching dataset
+ALLOWED_CAMPERS_DL <- unique(c(
+  ALLOWED_CAMPERS,
+  ifelse(grepl(",", ALLOWED_CAMPERS),
+         paste0(trimws(sub(".*,", "", ALLOWED_CAMPERS)), " ", trimws(sub(",.*", "", ALLOWED_CAMPERS))),
+         ALLOWED_CAMPERS)
+))
 
 # Combine both allowed lists for the pitching dataset
 ALL_ALLOWED_PITCHERS <- unique(c(ALLOWED_PITCHERS_DL, ALLOWED_CAMPERS_DL))
@@ -3547,7 +3608,7 @@ pitch_ui <- function(show_header = FALSE) {
     if (isTRUE(show_header)) {
       fluidRow(
         class = "suite-header",
-        column(2, tags$img(src = SCHOOL_CONFIG$branding$secondary_logo, height = "100px")),
+        column(2, tags$img(src = "PCUlogo.png", height = "100px")),
         column(
           8,
           div(
@@ -3558,7 +3619,7 @@ pitch_ui <- function(show_header = FALSE) {
         column(
           2,
           div(style = "text-align:right; margin-top:10px;",
-              tags$img(src = SCHOOL_CONFIG$branding$primary_logo, height = "80px"))
+              tags$img(src = "GCUlogo.png", height = "80px"))
         )
       )
     },
@@ -3948,7 +4009,7 @@ mod_hit_ui <- function(id, show_header = FALSE) {
     if (isTRUE(show_header)) {
       fluidRow(
         class = "suite-header",
-        column(2, tags$img(src = SCHOOL_CONFIG$branding$secondary_logo, height = "100px")),
+        column(2, tags$img(src = "PCUlogo.png", height = "100px")),
         column(
           8,
           div(
@@ -3959,7 +4020,7 @@ mod_hit_ui <- function(id, show_header = FALSE) {
         column(
           2,
           div(style = "text-align:right; margin-top:10px;",
-              tags$img(src = SCHOOL_CONFIG$branding$primary_logo, height = "80px"))
+              tags$img(src = "GCUlogo.png", height = "80px"))
         )
       )
     },
@@ -5319,7 +5380,7 @@ mod_catch_ui <- function(id, show_header = FALSE) {
     if (isTRUE(show_header)) {
       fluidRow(
         class = "suite-header",
-        column(2, tags$img(src = SCHOOL_CONFIG$branding$secondary_logo, height = "100px")),
+        column(2, tags$img(src = "PCUlogo.png", height = "100px")),
         column(
           8,
           div(
@@ -5330,7 +5391,7 @@ mod_catch_ui <- function(id, show_header = FALSE) {
         column(
           2,
           div(style = "text-align:right; margin-top:10px;",
-              tags$img(src = SCHOOL_CONFIG$branding$primary_logo, height = "80px"))
+              tags$img(src = "GCUlogo.png", height = "80px"))
         )
       )
     },
@@ -7560,7 +7621,7 @@ mod_leader_ui <- function(id, show_header = FALSE) {
     if (isTRUE(show_header)) {
       fluidRow(
         class = "suite-header",
-        column(2, tags$img(src = SCHOOL_CONFIG$branding$secondary_logo, height = "100px")),
+        column(2, tags$img(src = "PCUlogo.png", height = "100px")),
         column(
           8,
           div(
@@ -7571,7 +7632,7 @@ mod_leader_ui <- function(id, show_header = FALSE) {
         column(
           2,
           div(style = "text-align:right; margin-top:10px;",
-              tags$img(src = SCHOOL_CONFIG$branding$primary_logo, height = "80px"))
+              tags$img(src = "GCUlogo.png", height = "80px"))
         )
       )
     },
@@ -8438,7 +8499,7 @@ mod_comp_ui <- function(id, show_header = FALSE) {
     if (isTRUE(show_header)) {
       fluidRow(
         class = "suite-header",
-        column(2, tags$img(src = SCHOOL_CONFIG$branding$secondary_logo, height = "100px")),
+        column(2, tags$img(src = "PCUlogo.png", height = "100px")),
         column(
           8,
           div(
@@ -10197,7 +10258,7 @@ player_plans_ui <- function() {
             fluidRow(
               column(2,
                      div(style = "text-align: left; padding-top: 20px;",
-                         tags$img(src = SCHOOL_CONFIG$branding$secondary_logo, style = "height: 80px; max-width: 100%;")
+                         tags$img(src = "PCUlogo.png", style = "height: 80px; max-width: 100%;")
                      )
               ),
               column(8,
@@ -10209,7 +10270,7 @@ player_plans_ui <- function() {
               ),
               column(2,
                      div(style = "text-align: right; padding-top: 30px;",
-                         tags$img(src = SCHOOL_CONFIG$branding$primary_logo, style = "height: 40px; max-width: 100%;")
+                         tags$img(src = "GCUlogo.png", style = "height: 40px; max-width: 100%;")
                      )
               )
             ),
@@ -10422,9 +10483,9 @@ ui <- tagList(
   
   navbarPage(
     title = tagList(
-      tags$img(src = SCHOOL_CONFIG$branding$primary_logo, class = "brand-logo", alt = "GCU"),
+      tags$img(src = "GCUlogo.png", class = "brand-logo", alt = "GCU"),
       tags$span("Dashboard", class = "brand-title"),
-      tags$img(src = SCHOOL_CONFIG$branding$secondary_logo, class = "pcu-right", alt = "PCU")
+      tags$img(src = "PCUlogo.png", class = "pcu-right", alt = "PCU")
     ),
     id = "top",
     inverse = TRUE,
@@ -10658,8 +10719,7 @@ server <- function(input, output, session) {
     }
   }, ignoreInit = TRUE)
   
-  # Admin emails are now loaded from school configuration in init.R
-  admin_emails <- ADMIN_EMAILS
+  admin_emails <- c("jgaynor@pitchingcoachu.com", "banni17@yahoo.com", "micaiahtucker@gmail.com", "joshtols21@gmail.com", "james.a.gaynor@gmail.com")
   # helper to normalize email
   norm_email <- function(x) tolower(trimws(x))
   
@@ -11490,7 +11550,7 @@ server <- function(input, output, session) {
     
     tags$div(
       style = "display:flex; align-items:center; justify-content:space-between;",
-      tags$img(src = SCHOOL_CONFIG$branding$secondary_logo, height = "50px", style = "margin-right:15px;"),
+      tags$img(src = "PCUlogo.png", height = "50px", style = "margin-right:15px;"),
       tags$h3(paste(title, "|", dates_str), style = "font-weight:bold; margin:0; flex:1;"),
       tags$div(
         style = "font-weight:bold; margin-left:20px;",

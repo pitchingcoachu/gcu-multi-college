@@ -13,29 +13,10 @@ suppressPackageStartupMessages({
   library(rsconnect)
 })
 
-# Load school configuration
-if (file.exists("config.R")) {
-  source("config.R", local = FALSE)
-  config <- get_config()
-  cat("Loaded configuration for:", config$school_name, "\n")
-  cat("Will deploy to app name:", config$deployment$app_name, "\n")
-} else {
-  # Fallback configuration
-  config <- list(
-    school_name = "Unknown School",
-    deployment = list(
-      app_name = Sys.getenv("APP_NAME", "schoolbaseball"),
-      title = "Baseball Dashboard"
-    )
-  )
-  cat("WARNING: config.R not found, using fallback configuration\n")
-  cat("App name:", config$deployment$app_name, "\n")
-}})
-
 # Deploy to shinyapps.io
 deploy_app <- function() {
   tryCatch({
-    cat("Starting deployment of", config$school_name, "app...\n")
+    cat("Starting deployment of Harvard app...\n")
     
     # Run package installation script
     cat("Running package installation script...\n")
@@ -77,7 +58,7 @@ deploy_app <- function() {
     cat("Deploying to shinyapps.io...\n")
     deployApp(
       appDir = ".",
-      appName = config$deployment$app_name,
+      appName = "gcubaseball",
       forceUpdate = TRUE,
       launch.browser = FALSE,
       logLevel = "verbose"
@@ -96,7 +77,7 @@ deploy_app <- function() {
 
 # Run deployment
 if (!interactive()) {
-  cat(config$school_name, "- Deployment Script\n")
+  cat("CBU - Deployment Script\n")
   cat("==========================================\n")
   success <- deploy_app()
   if (!success) {

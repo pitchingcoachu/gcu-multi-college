@@ -12,35 +12,10 @@ library(stringr)
 
 # Load CSV filtering utilities
 source("csv_filter_utils.R")
-# Load school configuration
-if (file.exists("config.R")) {
-  source("config.R", local = FALSE)
-  config <- get_config()
-} else {
-  # Fallback to environment variables if config system not available
-  config <- list(
-    ftp = list(
-      host = Sys.getenv("FTP_HOST", "ftp.trackmanbaseball.com"),
-      username = Sys.getenv("FTP_USER", "GrandCanyon"),
-      password = Sys.getenv("FTP_PASS", "F42Y6LiLGS")
-    ),
-    data_config = list(
-      start_date = as.Date(Sys.getenv("DATA_START_DATE", "2025-10-20")),
-      csv_exclusions = strsplit(Sys.getenv("CSV_EXCLUSIONS", "playerpositioning"), ",")[[1]]
-    )
-  )
-  cat("Using fallback FTP configuration from environment variables\n")
-}
-
-# Load CSV filtering utilities
-source("csv_filter_utils.R")
-
-# FTP credentials from configuration
-FTP_HOST <- config$ftp$host
-FTP_USER <- config$ftp$username
-FTP_PASS <- config$ftp$password
-
-cat("Connecting to FTP server:", FTP_HOST, "as user:", FTP_USER, "\n")
+# FTP credentials
+FTP_HOST <- "ftp.trackmanbaseball.com"
+FTP_USER <- "GrandCanyon"
+FTP_PASS <- "F42Y6LiLGS"
 
 # Local data directories
 LOCAL_DATA_DIR      <- "data/"
@@ -166,7 +141,7 @@ is_date_in_range <- function(file_path) {
   file_date <- as.Date(paste(date_match[2], date_match[3], date_match[4], sep = "-"))
   
   # Start date: August 1, 2025 (nothing before this)
-  start_date <- config$data_config$start_date
+  start_date <- as.Date("2025-10-20")
   
   # Include all data from August 1, 2025 onwards (no future year restrictions)
   return(file_date >= start_date)
@@ -337,7 +312,7 @@ deduplicate_files <- function() {
 
 # Main sync function
 main_sync <- function() {
-  cat("Starting data sync for", config$school_name %||% "Unknown School", "at", as.character(Sys.time()), "\n")
+  cat("Starting VMI data sync at", as.character(Sys.time()), "\n")
   
   start_time <- Sys.time()
   
