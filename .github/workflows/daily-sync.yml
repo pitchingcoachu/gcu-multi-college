@@ -1,4 +1,4 @@
-name: Daily GCU Data Sync and Deploy
+name: Multi-College Data Sync and Deploy
 
 on:
   schedule:
@@ -10,7 +10,10 @@ on:
 jobs:
   sync-and-deploy:
     runs-on: ubuntu-latest
-    
+    strategy:
+      matrix:
+        school: [GCU, HARVARD, VMI, FLORIDA, CBU, CREIGHTON, UNM]
+        
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -55,35 +58,41 @@ jobs:
       run: |
         Rscript -e "rsconnect::setAccountInfo(name='${{ secrets.SHINYAPPS_ACCOUNT }}', token='${{ secrets.SHINYAPPS_TOKEN }}', secret='${{ secrets.SHINYAPPS_SECRET }}')"
         
-    - name: Sync GCU data
+    - name: Sync ${{ matrix.school }} data
+      env:
+        SCHOOL_CODE: ${{ matrix.school }}
       run: Rscript automated_data_sync.R
         
-    - name: Check if data directory exists
+    - name: Check if data directory exists for ${{ matrix.school }}
       id: check_data
       run: |
-        if [ -d "data" ] && [ "$(ls -A data)" ]; then
+        school_lower=$(echo "${{ matrix.school }}" | tr '[:upper:]' '[:lower:]')
+        if [ -d "data/${school_lower}" ] && [ "$(ls -A data/${school_lower})" ]; then
           echo "data_updated=true" >> $GITHUB_OUTPUT
-          echo "Found data files:"
-          ls -la data/
+          echo "Found data files for ${{ matrix.school }}:"
+          ls -la data/${school_lower}/
         else
           echo "data_updated=false" >> $GITHUB_OUTPUT
-          echo "No data directory or no files found"
+          echo "No data directory or no files found for ${{ matrix.school }}"
         fi
         
-    - name: Deploy to shinyapps.io
+    - name: Deploy ${{ matrix.school }} to shinyapps.io
       if: steps.check_data.outputs.data_updated == 'true' || github.event_name == 'workflow_dispatch'
+      env:
+        SCHOOL_CODE: ${{ matrix.school }}
       run: Rscript deploy_script.R
       
-    - name: Commit updated data
+    - name: Commit updated data for ${{ matrix.school }}
       if: steps.check_data.outputs.data_updated == 'true'
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add data/
+        school_lower=$(echo "${{ matrix.school }}" | tr '[:upper:]' '[:lower:]')
+        git add data/${school_lower}/
         if git diff --staged --quiet; then
-          echo "No changes to commit"
+          echo "No changes to commit for ${{ matrix.school }}"
         else
-          git commit -m "Auto-update GCU data $(date)"
+          git commit -m "Auto-update ${{ matrix.school }} data $(date)"
           git pull --rebase origin main
           git push
         fi
