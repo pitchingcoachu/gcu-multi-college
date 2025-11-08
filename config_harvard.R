@@ -7,7 +7,7 @@ get_harvard_config <- function() {
     school_code = "HARVARD",
     school_name = "Harvard University",
     team_name = "Crimson",
-    app_name = "harvardbaseball",
+    app_name = "harvardbaseball1",
     
     # Logo files (in www/ directory)
     primary_logo = "Harvardlogo.png",
