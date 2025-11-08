@@ -2596,9 +2596,16 @@ library(readr)
 library(stringr)   # explicit, even though tidyverse includes it
 
 # Point to the app's local data folder (works locally & on shinyapps.io)
-data_parent <- normalizePath(file.path(getwd(), "data"), mustWork = TRUE)
+# Get school-specific data directory
+school_data_dir <- if(exists("SCHOOL_CODE") && nzchar(SCHOOL_CODE)) {
+  file.path("data", tolower(SCHOOL_CODE))
+} else {
+  file.path("data", tolower(config$school_code))
+}
 
-# Find every CSV under data/, keep only those under practice/ or V3/
+data_parent <- normalizePath(file.path(getwd(), school_data_dir), mustWork = TRUE)
+
+# Find every CSV under school's data directory, keep only those under practice/ or V3/
 all_csvs <- list.files(
   path       = data_parent,
   pattern    = "\\.csv$",

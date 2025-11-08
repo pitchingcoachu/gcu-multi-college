@@ -41,11 +41,9 @@ FTP_USER <- config$ftp$username
 FTP_PASS <- config$ftp$password
 
 cat("Connecting to FTP server:", FTP_HOST, "as user:", FTP_USER, "\n")
-cat("School-specific data directory:", LOCAL_DATA_DIR, "\n")
-cat("  - Practice data:", LOCAL_PRACTICE_DIR, "\n")
-cat("  - V3 data:", LOCAL_V3_DIR, "\n")
 
-# School-specific data directories  
+# Local data directories
+# School-specific data directories
 SCHOOL_CODE <- config$school_code
 LOCAL_DATA_DIR      <- file.path("data", tolower(SCHOOL_CODE))
 LOCAL_PRACTICE_DIR  <- file.path(LOCAL_DATA_DIR, "practice")
@@ -141,7 +139,7 @@ sync_practice_data <- function() {
       
       for (file in csv_files) {
         remote_path <- paste0(day_path, file)
-        local_path <- file.path(LOCAL_PRACTICE_DIR, paste0(tolower(SCHOOL_CODE), "_practice_", month_dir, "_", day_dir, "_", file))
+        local_path <- file.path(LOCAL_PRACTICE_DIR, paste0("practice_", month_dir, "_", day_dir, "_", file))
         
         if (download_csv(remote_path, local_path)) {
           downloaded_count <- downloaded_count + 1
@@ -220,7 +218,7 @@ sync_v3_data <- function() {
         
         for (file in csv_files) {
           remote_path <- paste0(csv_path, file)
-          local_path <- file.path(LOCAL_V3_DIR, paste0(tolower(SCHOOL_CODE), "_v3_", month_dir, "_", day_dir, "_", file))
+          local_path <- file.path(LOCAL_V3_DIR, paste0("v3_", month_dir, "_", day_dir, "_", file))
           
           if (download_csv(remote_path, local_path)) {
             downloaded_count <- downloaded_count + 1
@@ -238,7 +236,7 @@ sync_v3_data <- function() {
         
         for (file in csv_files) {
           remote_path <- paste0(day_path, file)
-          local_path <- file.path(LOCAL_V3_DIR, paste0(tolower(SCHOOL_CODE), "_v3_", month_dir, "_", day_dir, "_", file))
+          local_path <- file.path(LOCAL_V3_DIR, paste0("v3_", month_dir, "_", day_dir, "_", file))
           
           if (download_csv(remote_path, local_path)) {
             downloaded_count <- downloaded_count + 1

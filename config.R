@@ -29,6 +29,11 @@ load_school_config <- function(school_code = NULL) {
   config <- switch(school_code,
     "GCU" = get_gcu_config(),
     "HARVARD" = get_harvard_config(),
+    "VMI" = get_vmi_config(),
+    "FLORIDA" = get_florida_config(),
+    "CBU" = get_cbu_config(),
+    "CREIGHTON" = get_creighton_config(),
+    "UNM" = get_unm_config(),
     "TEMPLATE" = get_template_config(),
     {
       warning("Unknown school code: ", school_code, ". Using GCU config as fallback.")
@@ -78,7 +83,7 @@ get_gcu_config <- function() {
     
     # App Deployment Configuration
     deployment = list(
-      app_name = "gcubaseball",
+      app_name = "gcubaseball1",
       title = "GCU Baseball Dashboard"
     ),
     
@@ -405,7 +410,7 @@ get_harvard_config <- function() {
     
     # App Deployment Configuration
     deployment = list(
-      app_name = "harvardbaseball",
+      app_name = "harvardbaseball1",
       title = "Harvard Baseball Dashboard"
     ),
     
@@ -446,6 +451,449 @@ get_harvard_config <- function() {
     allowed_catchers = c(
       "Burns, Will",
       "Chen, Jason"
+    ),
+    
+    # Camp Participants (can be empty if no camps)
+    camp_participants = c(),
+    
+    # Data Processing Configuration
+    data_config = list(
+      # Date filtering - start date for data inclusion
+      start_date = as.Date("2025-10-20"),
+      
+      # CSV exclusion patterns (files to skip during sync)
+      csv_exclusions = c("playerpositioning"),
+      
+      # Required data columns for validation
+      required_columns = c("Date", "Pitcher", "TaggedPitchType", "RelSpeed"),
+      
+      # Data quality thresholds
+      min_velocity = 60,    # Minimum velocity for valid pitch
+      max_velocity = 120    # Maximum velocity for valid pitch
+    )
+  )
+}
+# =============================================================================
+# VMI CONFIGURATION  
+# =============================================================================
+
+get_vmi_config <- function() {
+  list(
+    # School Identity
+    school_code = "VMI",
+    school_name = "Virginia Military Institute",
+    team_name = "VMI Keydets",
+    
+    # Team Code for filtering (if needed)
+    team_code = "",  # Blank = no filter
+    
+    # Admin Configuration (from VMI app.R)
+    admin_emails = c(
+      "jgaynor@pitchingcoachu.com", 
+      "crosbyac@vmi.edu"
+    ),
+    
+    # Notes API Configuration
+    notes_api = list(
+      url = "https://script.google.com/macros/s/AKfycbwuftWhRZGV7f1lWFJnC5mBcxaXh7P7Xhlc7_Lvr5r6ZO_GYKbv6YxCp7B0AXsvCKY0/exec",
+      token = "VMIbaseball"
+    ),
+    
+    # FTP Configuration for Data Sync (from VMI automated_data_sync.R)
+    ftp = list(
+      host = "ftp.trackmanbaseball.com",
+      username = "VMI",
+      password = "q7MvFhmAEN"
+    ),
+    
+    # App Deployment Configuration
+    deployment = list(
+      app_name = "vmibaseball1",
+      title = "VMI Baseball Dashboard"
+    ),
+    
+    # Visual Configuration
+    branding = list(
+      primary_logo = "VMIlogo.png",        # VMI logo
+      secondary_logo = "PCUlogo.png",      # PCU logo (right side)
+      navbar_theme = "inverse",            # Bootstrap navbar theme
+      primary_color = "#FF0000",          # VMI Red
+      secondary_color = "#FFD700",        # VMI Gold
+      accent_color = "#f5f5f5"           # Light gray
+    ),
+    
+    # Player Lists - Team Pitchers (sample)
+    allowed_pitchers = c(
+      "Sample, Player1",
+      "Sample, Player2"
+    ),
+    
+    # Player Lists - Team Position Players  
+    allowed_hitters = c(
+      "Sample, Player1",
+      "Sample, Player2"
+    ),
+    
+    # Player Lists - Catchers
+    allowed_catchers = c(
+      "Sample, Player1"
+    ),
+    
+    # Camp Participants (can be empty if no camps)
+    camp_participants = c(),
+    
+    # Data Processing Configuration
+    data_config = list(
+      # Date filtering - start date for data inclusion
+      start_date = as.Date("2025-10-20"),
+      
+      # CSV exclusion patterns (files to skip during sync)
+      csv_exclusions = c("playerpositioning"),
+      
+      # Required data columns for validation
+      required_columns = c("Date", "Pitcher", "TaggedPitchType", "RelSpeed"),
+      
+      # Data quality thresholds
+      min_velocity = 60,    # Minimum velocity for valid pitch
+      max_velocity = 120    # Maximum velocity for valid pitch
+    )
+  )
+}
+
+# =============================================================================
+# UNIVERSITY OF FLORIDA CONFIGURATION  
+# =============================================================================
+
+get_florida_config <- function() {
+  list(
+    # School Identity
+    school_code = "FLORIDA",
+    school_name = "University of Florida",
+    team_name = "Florida Gators",
+    
+    # Team Code for filtering (if needed)
+    team_code = "",  # Blank = no filter
+    
+    # Admin Configuration (from Florida app.R)
+    admin_emails = c(
+      "jgaynor@pitchingcoachu.com", 
+      "zachc@gators.ufl.edu", 
+      "davidk@gators.ufl.edu", 
+      "davidkopp47@gmail.com"
+    ),
+    
+    # Notes API Configuration
+    notes_api = list(
+      url = "https://script.google.com/macros/s/AKfycbwuftWhRZGV7f1lWFJnC5mBcxaXh7P7Xhlc7_Lvr5r6ZO_GYKbv6YxCp7B0AXsvCKY0/exec",
+      token = "Floridabaseball"
+    ),
+    
+    # FTP Configuration for Data Sync (from Florida automated_data_sync.R)
+    ftp = list(
+      host = "ftp.trackmanbaseball.com",
+      username = "Florida Gators",
+      password = "yWFB84w2eJ"
+    ),
+    
+    # App Deployment Configuration
+    deployment = list(
+      app_name = "floridabaseball1",
+      title = "Florida Baseball Dashboard"
+    ),
+    
+    # Visual Configuration
+    branding = list(
+      primary_logo = "UFlogo.png",         # Florida logo
+      secondary_logo = "PCUlogo.png",      # PCU logo (right side)
+      navbar_theme = "inverse",            # Bootstrap navbar theme
+      primary_color = "#FF6600",          # Gator Orange
+      secondary_color = "#003366",        # Gator Blue
+      accent_color = "#f5f5f5"           # Light gray
+    ),
+    
+    # Player Lists - Team Pitchers (sample)
+    allowed_pitchers = c(
+      "Sample, Player1",
+      "Sample, Player2"
+    ),
+    
+    # Player Lists - Team Position Players  
+    allowed_hitters = c(
+      "Sample, Player1",
+      "Sample, Player2"
+    ),
+    
+    # Player Lists - Catchers
+    allowed_catchers = c(
+      "Sample, Player1"
+    ),
+    
+    # Camp Participants (can be empty if no camps)
+    camp_participants = c(),
+    
+    # Data Processing Configuration
+    data_config = list(
+      # Date filtering - start date for data inclusion
+      start_date = as.Date("2025-10-20"),
+      
+      # CSV exclusion patterns (files to skip during sync)
+      csv_exclusions = c("playerpositioning"),
+      
+      # Required data columns for validation
+      required_columns = c("Date", "Pitcher", "TaggedPitchType", "RelSpeed"),
+      
+      # Data quality thresholds
+      min_velocity = 60,    # Minimum velocity for valid pitch
+      max_velocity = 120    # Maximum velocity for valid pitch
+    )
+  )
+}
+
+# =============================================================================
+# CALIFORNIA BAPTIST UNIVERSITY CONFIGURATION  
+# =============================================================================
+
+get_cbu_config <- function() {
+  list(
+    # School Identity
+    school_code = "CBU",
+    school_name = "California Baptist University",
+    team_name = "CBU Lancers",
+    
+    # Team Code for filtering (if needed)
+    team_code = "",  # Blank = no filter
+    
+    # Admin Configuration (from CBU app.R)
+    admin_emails = c(
+      "jgaynor@pitchingcoachu.com", 
+      "andalvarez@calbaptist.edu", 
+      "msilberman@calbaptist.edu"
+    ),
+    
+    # Notes API Configuration
+    notes_api = list(
+      url = "https://script.google.com/macros/s/AKfycbwuftWhRZGV7f1lWFJnC5mBcxaXh7P7Xhlc7_Lvr5r6ZO_GYKbv6YxCp7B0AXsvCKY0/exec",
+      token = "CBUbaseball"
+    ),
+    
+    # FTP Configuration for Data Sync (from CBU automated_data_sync.R)
+    ftp = list(
+      host = "ftp.trackmanbaseball.com",
+      username = "CalBaptist",
+      password = "5tz7saLl5Z"
+    ),
+    
+    # App Deployment Configuration
+    deployment = list(
+      app_name = "cbubaseball1",
+      title = "CBU Baseball Dashboard"
+    ),
+    
+    # Visual Configuration
+    branding = list(
+      primary_logo = "CBUlogo.png",        # CBU logo
+      secondary_logo = "PCUlogo.png",      # PCU logo (right side)
+      navbar_theme = "inverse",            # Bootstrap navbar theme
+      primary_color = "#003366",          # CBU Blue
+      secondary_color = "#FFD700",        # CBU Gold
+      accent_color = "#f5f5f5"           # Light gray
+    ),
+    
+    # Player Lists - Team Pitchers (sample)
+    allowed_pitchers = c(
+      "Sample, Player1",
+      "Sample, Player2"
+    ),
+    
+    # Player Lists - Team Position Players  
+    allowed_hitters = c(
+      "Sample, Player1",
+      "Sample, Player2"
+    ),
+    
+    # Player Lists - Catchers
+    allowed_catchers = c(
+      "Sample, Player1"
+    ),
+    
+    # Camp Participants (can be empty if no camps)
+    camp_participants = c(),
+    
+    # Data Processing Configuration
+    data_config = list(
+      # Date filtering - start date for data inclusion
+      start_date = as.Date("2025-10-20"),
+      
+      # CSV exclusion patterns (files to skip during sync)
+      csv_exclusions = c("playerpositioning"),
+      
+      # Required data columns for validation
+      required_columns = c("Date", "Pitcher", "TaggedPitchType", "RelSpeed"),
+      
+      # Data quality thresholds
+      min_velocity = 60,    # Minimum velocity for valid pitch
+      max_velocity = 120    # Maximum velocity for valid pitch
+    )
+  )
+}
+
+# =============================================================================
+# CREIGHTON UNIVERSITY CONFIGURATION  
+# =============================================================================
+
+get_creighton_config <- function() {
+  list(
+    # School Identity
+    school_code = "CREIGHTON",
+    school_name = "Creighton University",
+    team_name = "Creighton Bluejays",
+    
+    # Team Code for filtering (if needed)
+    team_code = "",  # Blank = no filter
+    
+    # Admin Configuration (from Creighton app.R)
+    admin_emails = c(
+      "jgaynor@pitchingcoachu.com", 
+      "michaelcurrent@creighton.edu", 
+      "billymohl@creighton.edu", 
+      "willmcgillis@creighton.edu", 
+      "markkingston@creighton.edu", 
+      "logantolbert@creighton.edu"
+    ),
+    
+    # Notes API Configuration
+    notes_api = list(
+      url = "https://script.google.com/macros/s/AKfycbwuftWhRZGV7f1lWFJnC5mBcxaXh7P7Xhlc7_Lvr5r6ZO_GYKbv6YxCp7B0AXsvCKY0/exec",
+      token = "Creightonbaseball"
+    ),
+    
+    # FTP Configuration for Data Sync (from Creighton automated_data_sync.R)
+    ftp = list(
+      host = "ftp.trackmanbaseball.com",
+      username = "Creighton",
+      password = "tbp2gaDXmB"
+    ),
+    
+    # App Deployment Configuration
+    deployment = list(
+      app_name = "creightonbaseball1",
+      title = "Creighton Baseball Dashboard"
+    ),
+    
+    # Visual Configuration
+    branding = list(
+      primary_logo = "CREIGHTONlogo.png",  # Creighton logo
+      secondary_logo = "PCUlogo.png",      # PCU logo (right side)
+      navbar_theme = "inverse",            # Bootstrap navbar theme
+      primary_color = "#003366",          # Creighton Blue
+      secondary_color = "#FFFFFF",        # White
+      accent_color = "#f5f5f5"           # Light gray
+    ),
+    
+    # Player Lists - Team Pitchers (sample)
+    allowed_pitchers = c(
+      "Sample, Player1",
+      "Sample, Player2"
+    ),
+    
+    # Player Lists - Team Position Players  
+    allowed_hitters = c(
+      "Sample, Player1",
+      "Sample, Player2"
+    ),
+    
+    # Player Lists - Catchers
+    allowed_catchers = c(
+      "Sample, Player1"
+    ),
+    
+    # Camp Participants (can be empty if no camps)
+    camp_participants = c(),
+    
+    # Data Processing Configuration
+    data_config = list(
+      # Date filtering - start date for data inclusion
+      start_date = as.Date("2025-10-20"),
+      
+      # CSV exclusion patterns (files to skip during sync)
+      csv_exclusions = c("playerpositioning"),
+      
+      # Required data columns for validation
+      required_columns = c("Date", "Pitcher", "TaggedPitchType", "RelSpeed"),
+      
+      # Data quality thresholds
+      min_velocity = 60,    # Minimum velocity for valid pitch
+      max_velocity = 120    # Maximum velocity for valid pitch
+    )
+  )
+}
+
+# =============================================================================
+# UNIVERSITY OF NEW MEXICO CONFIGURATION  
+# =============================================================================
+
+get_unm_config <- function() {
+  list(
+    # School Identity
+    school_code = "UNM",
+    school_name = "University of New Mexico",
+    team_name = "UNM Lobos",
+    
+    # Team Code for filtering (if needed)
+    team_code = "",  # Blank = no filter
+    
+    # Admin Configuration (from UNM app.R)
+    admin_emails = c(
+      "jgaynor@pitchingcoachu.com", 
+      "mlopez41@unm.edu", 
+      "jstill@unm.edu"
+    ),
+    
+    # Notes API Configuration
+    notes_api = list(
+      url = "https://script.google.com/macros/s/AKfycbwuftWhRZGV7f1lWFJnC5mBcxaXh7P7Xhlc7_Lvr5r6ZO_GYKbv6YxCp7B0AXsvCKY0/exec",
+      token = "UNMbaseball"
+    ),
+    
+    # FTP Configuration for Data Sync (from UNM automated_data_sync.R)
+    # Note: UNM has separate Practice and V3 FTP accounts
+    ftp = list(
+      host = "ftp.trackmanbaseball.com",
+      username = "UNewMexico",
+      password = "nPyLmUW9gJ"
+    ),
+    
+    # App Deployment Configuration
+    deployment = list(
+      app_name = "unmbaseball1",
+      title = "UNM Baseball Dashboard"
+    ),
+    
+    # Visual Configuration
+    branding = list(
+      primary_logo = "UNMlogo.png",        # UNM logo
+      secondary_logo = "PCUlogo.png",      # PCU logo (right side)
+      navbar_theme = "inverse",            # Bootstrap navbar theme
+      primary_color = "#BA0C2F",          # UNM Cherry Red
+      secondary_color = "#C4D600",        # UNM Turquoise
+      accent_color = "#f5f5f5"           # Light gray
+    ),
+    
+    # Player Lists - Team Pitchers (sample)
+    allowed_pitchers = c(
+      "Sample, Player1",
+      "Sample, Player2"
+    ),
+    
+    # Player Lists - Team Position Players  
+    allowed_hitters = c(
+      "Sample, Player1",
+      "Sample, Player2"
+    ),
+    
+    # Player Lists - Catchers
+    allowed_catchers = c(
+      "Sample, Player1"
     ),
     
     # Camp Participants (can be empty if no camps)

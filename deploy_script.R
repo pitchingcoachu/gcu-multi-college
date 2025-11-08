@@ -1,6 +1,14 @@
 # deploy_script.R
-# VMI Baseball App Deployment Script
-# Deploys the Shiny app to shinyapps.io
+# Multi-College Baseball App Deployment Script
+# Deploys the Shiny app to shinyapps.io with school-specific configuration
+
+# Load school configuration for deployment
+source("config.R")
+config <- load_school_config()
+
+cat("Deploying for:", config$school_name, "\n")
+cat("App name:", config$deployment$app_name, "\n")
+cat("Using FTP account:", config$ftp$username, "\n")
 
 # Set CRAN repository
 options(repos = c(CRAN = "https://cloud.r-project.org/"))
@@ -12,25 +20,6 @@ suppressPackageStartupMessages({
   }
   library(rsconnect)
 })
-
-# Load school configuration
-if (file.exists("config.R")) {
-  source("config.R", local = FALSE)
-  config <- get_config()
-  cat("Loaded configuration for:", config$school_name, "\n")
-  cat("Will deploy to app name:", config$deployment$app_name, "\n")
-} else {
-  # Fallback configuration
-  config <- list(
-    school_name = "Unknown School",
-    deployment = list(
-      app_name = Sys.getenv("APP_NAME", "schoolbaseball"),
-      title = "Baseball Dashboard"
-    )
-  )
-  cat("WARNING: config.R not found, using fallback configuration\n")
-  cat("App name:", config$deployment$app_name, "\n")
-}})
 
 # Deploy to shinyapps.io
 deploy_app <- function() {
