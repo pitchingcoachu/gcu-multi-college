@@ -51,6 +51,8 @@ assign("PRIMARY_LOGO_FILE", school_config$branding$primary_logo, envir = .Global
 assign("FTP_USERNAME", school_config$ftp$username, envir = .GlobalEnv)
 assign("APP_NAME", school_config$deployment$app_name, envir = .GlobalEnv)
 assign("ADMIN_EMAILS", school_config$admin_emails, envir = .GlobalEnv)
+assign("ALLOWED_PITCHERS_DL", school_config$allowed_pitchers, envir = .GlobalEnv)
+assign("ALLOWED_CAMPERS_DL", school_config$allowed_campers, envir = .GlobalEnv)
 
 # Validate that required files exist
 required_files <- c(

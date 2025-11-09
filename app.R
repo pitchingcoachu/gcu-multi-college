@@ -2597,11 +2597,21 @@ library(stringr)   # explicit, even though tidyverse includes it
 
 # Point to the app's local data folder (works locally & on shinyapps.io)
 # Get school-specific data directory
-school_data_dir <- if(exists("SCHOOL_CODE") && nzchar(SCHOOL_CODE)) {
-  file.path("data", tolower(SCHOOL_CODE))
+school_code_env <- Sys.getenv("SCHOOL_CODE", "")
+school_code_var <- if(exists("SCHOOL_CODE")) SCHOOL_CODE else ""
+
+cat("DEBUG - Environment SCHOOL_CODE:", school_code_env, "\n")
+cat("DEBUG - Variable SCHOOL_CODE:", school_code_var, "\n")
+
+school_data_dir <- if(nzchar(school_code_var)) {
+  file.path("data", tolower(school_code_var))
+} else if(nzchar(school_code_env)) {
+  file.path("data", tolower(school_code_env))
 } else {
-  file.path("data", tolower(Sys.getenv("SCHOOL_CODE", "gcu")))
+  file.path("data", "gcu")  # fallback to GCU
 }
+
+cat("DEBUG - Using data directory:", school_data_dir, "\n")
 
 data_parent <- normalizePath(file.path(getwd(), school_data_dir), mustWork = TRUE)
 
