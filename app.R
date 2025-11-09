@@ -2600,7 +2600,7 @@ library(stringr)   # explicit, even though tidyverse includes it
 school_data_dir <- if(exists("SCHOOL_CODE") && nzchar(SCHOOL_CODE)) {
   file.path("data", tolower(SCHOOL_CODE))
 } else {
-  file.path("data", tolower(config$school_code))
+  file.path("data", tolower(Sys.getenv("SCHOOL_CODE", "gcu")))
 }
 
 data_parent <- normalizePath(file.path(getwd(), school_data_dir), mustWork = TRUE)

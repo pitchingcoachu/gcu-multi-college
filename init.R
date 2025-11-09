@@ -45,6 +45,8 @@ Sys.setenv(APP_NAME = school_config$deployment$app_name)
 
 # Assign global variables for backward compatibility and testing
 assign("SCHOOL_NAME", school_config$school_name, envir = .GlobalEnv)
+assign("SCHOOL_CODE", school_config$school_code, envir = .GlobalEnv)
+assign("SCHOOL_CONFIG", school_config, envir = .GlobalEnv)
 assign("PRIMARY_LOGO_FILE", school_config$branding$primary_logo, envir = .GlobalEnv)
 assign("FTP_USERNAME", school_config$ftp$username, envir = .GlobalEnv)
 assign("APP_NAME", school_config$deployment$app_name, envir = .GlobalEnv)
