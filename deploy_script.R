@@ -10,6 +10,11 @@ cat("Deploying for:", config$school_name, "\n")
 cat("App name:", config$deployment$app_name, "\n")
 cat("Using FTP account:", config$ftp$username, "\n")
 
+# Create a school identifier file that the app can read at runtime
+school_id_file <- ".school_code"
+writeLines(config$school_code, school_id_file)
+cat("Created school identifier file:", school_id_file, "with code:", config$school_code, "\n")
+
 # Set CRAN repository
 options(repos = c(CRAN = "https://cloud.r-project.org/"))
 

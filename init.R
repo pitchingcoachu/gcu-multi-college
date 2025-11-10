@@ -12,9 +12,26 @@ if (file.exists("config.R")) {
 # Initialize configuration for this deployment
 cat("Initializing multi-college pitching dashboard...\n")
 
+# Determine school code from multiple sources (priority order)
+school_code <- Sys.getenv("SCHOOL_CODE", unset = "")
+
+# If not in environment, try reading from deployment file
+if (!nzchar(school_code) && file.exists(".school_code")) {
+  school_code <- trimws(readLines(".school_code", n = 1, warn = FALSE))
+  cat("Loaded school code from deployment file:", school_code, "\n")
+}
+
+# If still no school code, default to GCU
+if (!nzchar(school_code)) {
+  school_code <- "GCU"
+  cat("Using default school code: GCU\n")
+} else {
+  cat("Using school code:", school_code, "\n")
+}
+
 # Load and apply school configuration
 tryCatch({
-  school_config <- get_config()
+  school_config <- load_school_config(school_code)
   apply_config(school_config)
   
   cat("Successfully loaded configuration for:", school_config$school_name, "\n")

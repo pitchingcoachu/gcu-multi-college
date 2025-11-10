@@ -2599,14 +2599,20 @@ library(stringr)   # explicit, even though tidyverse includes it
 # Get school-specific data directory
 school_code_env <- Sys.getenv("SCHOOL_CODE", "")
 school_code_var <- if(exists("SCHOOL_CODE")) SCHOOL_CODE else ""
+school_code_file <- if(file.exists(".school_code")) {
+  trimws(readLines(".school_code", n = 1, warn = FALSE))
+} else ""
 
 cat("DEBUG - Environment SCHOOL_CODE:", school_code_env, "\n")
-cat("DEBUG - Variable SCHOOL_CODE:", school_code_var, "\n")
+cat("DEBUG - Variable SCHOOL_CODE:", school_code_var, "\n") 
+cat("DEBUG - File SCHOOL_CODE:", school_code_file, "\n")
 
 school_data_dir <- if(nzchar(school_code_var)) {
   file.path("data", tolower(school_code_var))
 } else if(nzchar(school_code_env)) {
   file.path("data", tolower(school_code_env))
+} else if(nzchar(school_code_file)) {
+  file.path("data", tolower(school_code_file))
 } else {
   file.path("data", "gcu")  # fallback to GCU
 }
