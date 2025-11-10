@@ -523,22 +523,33 @@ get_vmi_config <- function() {
       accent_color = "#f5f5f5"           # Light gray
     ),
     
-    # Player Lists - Team Pitchers (sample)
+    # Player Lists - Team Pitchers (from VMI repository)
     allowed_pitchers = c(
-      "Sample, Player1",
-      "Sample, Player2"
+      "Jones, Andrew",
+      "Driscoll, Clark",
+      "Biernot, Gavin",
+      "Sipe, Hunter",
+      "Douthat, Jim",
+      "Spiegel, Justin",
+      "Williamson, Nolan",
+      "Riley, Owen",
+      "Dhein, Peyton",
+      "Velasquez, Roberto",
+      "Taylor, Carson",
+      "Tyndall, Eli",
+      "Ahrens, Gary",
+      "Chevalier, George",
+      "Melescu, Miles",
+      "Lafine, Noah",
+      "Monroe, Trace",
+      "Bassett, Tyler"
     ),
     
-    # Player Lists - Team Position Players  
-    allowed_hitters = c(
-      "Sample, Player1",
-      "Sample, Player2"
-    ),
+    # Player Lists - Team Position Players (VMI does not have separate hitters list)
+    allowed_hitters = c(),
     
-    # Player Lists - Catchers
-    allowed_catchers = c(
-      "Sample, Player1"
-    ),
+    # Player Lists - Catchers (VMI does not have separate catchers list) 
+    allowed_catchers = c(),
     
     # Camp Participants (can be empty if no camps)
     camp_participants = c(),
@@ -612,22 +623,47 @@ get_florida_config <- function() {
       accent_color = "#f5f5f5"           # Light gray
     ),
     
-    # Player Lists - Team Pitchers (sample)
+    # Player Lists - Team Pitchers (from Florida repository)
     allowed_pitchers = c(
-      "Sample, Player1",
-      "Sample, Player2"
+      "Rodriguez, Christian",
+      "McNeillie, Luke", 
+      "Peterson, Liam",
+      "Whritenour, Joshua",
+      "Whritenour, Josh",
+      "Gomberg, Jacob",
+      "Coppola, Pierce",
+      "Clemente, Jake",
+      "McDonald, Caden",
+      "Barberi, Jackson",
+      "Barlow, Billy",
+      "Janssens, Niko",
+      "Rowland, Blaine",
+      "Menendez, Frank",
+      "Biemiller, McCall",
+      "Philpott, Alex",
+      "Jenkins, Matthew",
+      "Jenkins, Matt",
+      "Laurito, Mason",
+      "Ong, Felix",
+      "Sandford, Schuyler",
+      "King, Aidan",
+      "Montsdeoca, Carson",
+      "Sandefer, Russell",
+      "Moss, Cooper",
+      "Reeth, Ricky",
+      "Kurland, Rivers",
+      "Blair, Eli",
+      "Hoyt, Jackson",
+      "Walls, Cooper",
+      "Seo, Minjae",
+      "Lugo-Canchola, Ernesto"
     ),
     
-    # Player Lists - Team Position Players  
-    allowed_hitters = c(
-      "Sample, Player1",
-      "Sample, Player2"
-    ),
+    # Player Lists - Team Position Players (Florida does not have separate hitters list)
+    allowed_hitters = c(),
     
-    # Player Lists - Catchers
-    allowed_catchers = c(
-      "Sample, Player1"
-    ),
+    # Player Lists - Catchers (Florida does not have separate catchers list)
+    allowed_catchers = c(),
     
     # Camp Participants (can be empty if no camps)
     camp_participants = c(),
@@ -700,10 +736,27 @@ get_cbu_config <- function() {
       accent_color = "#f5f5f5"           # Light gray
     ),
     
-    # Player Lists - Team Pitchers (sample)
+    # Player Lists - Team Pitchers
     allowed_pitchers = c(
-      "Sample, Player1",
-      "Sample, Player2"
+      "Malki, Michael",
+      "Orozco, Julian", 
+      "Smathers, Kody",
+      "Fernandez, Marco",
+      "Berrios, Osvaldo",
+      "Wagner, Cole",
+      "Dillon, Joey",
+      "Hernandez, Erick",
+      "Hill, Kobe",
+      "Tate, Riley",
+      "Smith, Holden",
+      "Walker, Carson",
+      "Doughty, Ethan",
+      "Herrington, Maddox",
+      "Perry, Logan",
+      "Lewis, Colby",
+      "Flores, Pablo",
+      "Cardenas, Edwin",
+      "Rea, Andrew"
     ),
     
     # Player Lists - Team Position Players  
@@ -791,10 +844,28 @@ get_creighton_config <- function() {
       accent_color = "#f5f5f5"           # Light gray
     ),
     
-    # Player Lists - Team Pitchers (sample)
+    # Player Lists - Team Pitchers
     allowed_pitchers = c(
-      "Sample, Player1",
-      "Sample, Player2"
+      "Pineau, Jack",
+      "Wendt, Shea",
+      "Stratton, Evan",
+      "Erickson, Braden",
+      "Barr, Tyler",
+      "Mach, Sam",
+      "Snyder, Cole",
+      "Heidemann, Luke",
+      "Mangiameli, Vince",
+      "Reifenrath, Caden",
+      "Benak, Rory",
+      "Dufek, Luke",
+      "Morrison, Jake",
+      "Clausen, Zach",
+      "Fedje, Parker",
+      "Wichman, Tate",
+      "Wegener, Matthew",
+      "Blase, Max",
+      "Chebulski, Nick",
+      "Reckewey, Ethan"
     ),
     
     # Player Lists - Team Position Players  
@@ -880,10 +951,28 @@ get_unm_config <- function() {
       accent_color = "#f5f5f5"           # Light gray
     ),
     
-    # Player Lists - Team Pitchers (sample)
+    # Player Lists - Team Pitchers
     allowed_pitchers = c(
-      "Sample, Player1",
-      "Sample, Player2"
+      "White, Tommy",
+      "Alvarez, Diego",
+      "Woltz, Ethin",
+      "Nance, Carson",
+      "Hanson, Liam",
+      "Green, Cooper",
+      "Montoya, Ethan",
+      "Vaca, JP",
+      "Gonzalez, Isaiah",
+      "Brauer, Garrett",
+      "Allison, Carson",
+      "Gallegos, Gabe",
+      "Dufault, Kade",
+      "Guzman, Sebastian",
+      "Majerus, Bennett",
+      "Apodaca, Antonio",
+      "Cline, Evan",
+      "Wilcox, Liam",
+      "McAleer, Jake",
+      "Groshans, Jordan"
     ),
     
     # Player Lists - Team Position Players  

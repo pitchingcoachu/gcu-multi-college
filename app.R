@@ -10336,7 +10336,7 @@ player_plans_ui <- function() {
 ui <- tagList(
   # --- Custom navbar colors & styling ---
   tags$head(
-    tags$style(HTML("
+    tags$style(HTML(paste0("
       /* Black navbar */
       .navbar-inverse { background-color:#000000; border-color:#000000; }
       .navbar { position:relative; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
@@ -10374,13 +10374,13 @@ ui <- tagList(
       /* Tab links */
       .navbar-inverse .navbar-nav>li>a { color:#f2f2f2 !important; font-weight:600; }
       .navbar-inverse .navbar-nav>li>a:hover,
-      .navbar-inverse .navbar-nav>li>a:focus { color:#552B9A !important; background:transparent; }
+      .navbar-inverse .navbar-nav>li>a:focus { color:", SCHOOL_CONFIG$branding$primary_color, " !important; background:transparent; }
 
       /* Active tab */
       .navbar-inverse .navbar-nav>.active>a,
       .navbar-inverse .navbar-nav>.active>a:hover,
       .navbar-inverse .navbar-nav>.active>a:focus {
-        color:#ffffff !important; background-color:#552B9A !important;
+        color:#ffffff !important; background-color:", SCHOOL_CONFIG$branding$primary_color, " !important;
       }
 
       /* Add Note button */
@@ -10388,7 +10388,7 @@ ui <- tagList(
         border-radius: 999px; padding: 10px 12px; font-size: 16px;
         box-shadow: 0 2px 8px rgba(0,0,0,.25);
       }
-    "))
+    ")))
   ),
   
   # --- Global click handler for Notes → jump back to saved view ---
@@ -10416,10 +10416,10 @@ ui <- tagList(
     });
   ")),
   
-  tags$style(HTML("
+  tags$style(HTML(paste0("
     /* Custom note button color */
     #openNote.btn-note {
-      background-color:#552B9A;   /* base */
+      background-color:", SCHOOL_CONFIG$branding$primary_color, ";   /* base */
       border-color:#ffffff;
       color:#fff;
     }
@@ -10432,7 +10432,7 @@ ui <- tagList(
       color:#fff;
       outline:none;
     }
-  ")),
+  "))),
   
   # --- Floating "Add Note" button (top-right, all pages) ---
   absolutePanel(
