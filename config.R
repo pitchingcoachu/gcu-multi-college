@@ -32,7 +32,7 @@ load_school_config <- function(school_code = NULL) {
     "VMI" = get_vmi_config(),
     "FLORIDA" = get_florida_config(),
     "CBU" = get_cbu_config(),
-    "" = get__config(),
+    "CREIGHTON" = get_creighton_config(),
     "UNM" = get_unm_config(),
     "TEMPLATE" = get_template_config(),
     {
