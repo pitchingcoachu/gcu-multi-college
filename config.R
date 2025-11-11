@@ -935,6 +935,13 @@ get_unm_config <- function() {
       password = "nPyLmUW9gJ"
     ),
     
+    # Practice folder FTP Configuration (Jared Gaynor account)
+    practice_ftp = list(
+      host = "ftp.trackmanbaseball.com",
+      username = "Jared%20Gaynor",
+      password = "Wev4SdE2a8"
+    ),
+    
     # App Deployment Configuration
     deployment = list(
       app_name = "unmbaseball1",

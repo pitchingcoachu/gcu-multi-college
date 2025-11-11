@@ -35,16 +35,29 @@ if (file.exists("config.R")) {
 # Load CSV filtering utilities
 source("csv_filter_utils.R")
 
-# FTP credentials from configuration
-FTP_HOST <- config$ftp$host
-FTP_USER <- config$ftp$username
-FTP_PASS <- config$ftp$password
-
 # School-specific data directories  
 SCHOOL_CODE <- config$school_code
 LOCAL_DATA_DIR      <- file.path("data", tolower(SCHOOL_CODE))
 LOCAL_PRACTICE_DIR  <- file.path(LOCAL_DATA_DIR, "practice")
 LOCAL_V3_DIR        <- file.path(LOCAL_DATA_DIR, "v3")
+
+# FTP credentials from configuration
+FTP_HOST <- config$ftp$host
+FTP_USER <- config$ftp$username
+FTP_PASS <- config$ftp$password
+
+# Special handling for UNM practice data (uses Jared Gaynor FTP account)
+if (SCHOOL_CODE == "UNM" && !is.null(config$practice_ftp)) {
+  PRACTICE_FTP_HOST <- config$practice_ftp$host
+  PRACTICE_FTP_USER <- config$practice_ftp$username
+  PRACTICE_FTP_PASS <- config$practice_ftp$password
+  cat("UNM: Using separate practice FTP account:", PRACTICE_FTP_USER, "\n")
+} else {
+  # Use same FTP credentials for both practice and v3
+  PRACTICE_FTP_HOST <- FTP_HOST
+  PRACTICE_FTP_USER <- FTP_USER
+  PRACTICE_FTP_PASS <- FTP_PASS
+}
 
 cat("Connecting to FTP server:", FTP_HOST, "as user:", FTP_USER, "\n")
 cat("School-specific data directory:", LOCAL_DATA_DIR, "\n")
@@ -57,8 +70,8 @@ dir.create(LOCAL_PRACTICE_DIR, recursive = TRUE, showWarnings = FALSE)
 dir.create(LOCAL_V3_DIR, recursive = TRUE, showWarnings = FALSE)
 
 # Function to list files in FTP directory
-list_ftp_files <- function(ftp_path) {
-  url <- paste0("ftp://", FTP_USER, ":", FTP_PASS, "@", FTP_HOST, ftp_path)
+list_ftp_files <- function(ftp_path, custom_host = FTP_HOST, custom_user = FTP_USER, custom_pass = FTP_PASS) {
+  url <- paste0("ftp://", custom_user, ":", custom_pass, "@", custom_host, ftp_path)
   tryCatch({
     files <- getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
     strsplit(files, "\n")[[1]]
@@ -69,7 +82,7 @@ list_ftp_files <- function(ftp_path) {
 }
 
 # Function to download CSV file (no filtering - app will handle filtering)
-download_csv <- function(remote_file, local_file) {
+download_csv <- function(remote_file, local_file, custom_host = FTP_HOST, custom_user = FTP_USER, custom_pass = FTP_PASS) {
   # Check if this file should be excluded
   filename <- basename(remote_file)
   if (should_exclude_csv(filename)) {
@@ -81,7 +94,7 @@ download_csv <- function(remote_file, local_file) {
     return(FALSE)  # Return FALSE so we don't count it as newly downloaded
   }
   
-  url <- paste0("ftp://", FTP_USER, ":", FTP_PASS, "@", FTP_HOST, remote_file)
+  url <- paste0("ftp://", custom_user, ":", custom_pass, "@", custom_host, remote_file)
   
   tryCatch({
     # Download file to temporary location
@@ -115,7 +128,7 @@ sync_practice_data <- function() {
   practice_base_path <- "/practice/2025/"
   
   # Get all subdirectories (month folders)
-  months <- list_ftp_files(practice_base_path)
+  months <- list_ftp_files(practice_base_path, PRACTICE_FTP_HOST, PRACTICE_FTP_USER, PRACTICE_FTP_PASS)
   month_dirs <- months[grepl("^\\d{2}$", months)]  # Match MM format
   
   downloaded_count <- 0
@@ -125,7 +138,7 @@ sync_practice_data <- function() {
     cat("Checking practice month:", month_dir, "\n")
     
     # Get day folders in this month
-    days <- list_ftp_files(month_path)
+    days <- list_ftp_files(month_path, PRACTICE_FTP_HOST, PRACTICE_FTP_USER, PRACTICE_FTP_PASS)
     day_dirs <- days[grepl("^\\d{2}$", days)]  # Match DD format
     
     for (day_dir in day_dirs) {
@@ -133,7 +146,7 @@ sync_practice_data <- function() {
       cat("Processing practice date: 2025/", month_dir, "/", day_dir, "\n")
       
       # Look for CSV files directly in the day folder (no CSV subdirectory)
-      files_in_day <- list_ftp_files(day_path)
+      files_in_day <- list_ftp_files(day_path, PRACTICE_FTP_HOST, PRACTICE_FTP_USER, PRACTICE_FTP_PASS)
       csv_files <- files_in_day[grepl("\\.csv$", files_in_day, ignore.case = TRUE)]
       
       # Filter out files with "playerpositioning" in the name (allow unverified)
@@ -143,7 +156,7 @@ sync_practice_data <- function() {
         remote_path <- paste0(day_path, file)
         local_path <- file.path(LOCAL_PRACTICE_DIR, paste0(tolower(SCHOOL_CODE), "_practice_", month_dir, "_", day_dir, "_", file))
         
-        if (download_csv(remote_path, local_path)) {
+        if (download_csv(remote_path, local_path, PRACTICE_FTP_HOST, PRACTICE_FTP_USER, PRACTICE_FTP_PASS)) {
           downloaded_count <- downloaded_count + 1
         }
         
