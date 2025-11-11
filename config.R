@@ -522,8 +522,8 @@ get_vmi_config <- function() {
       primary_logo = "VMIlogo.png",        # VMI logo
       secondary_logo = "PCUlogo.png",      # PCU logo (right side)
       navbar_theme = "inverse",            # Bootstrap navbar theme
-      primary_color = "#FF0000",          # VMI Red
-      secondary_color = "#FFD700",        # VMI Gold
+      primary_color = "#c1121f",          # VMI Red (actual navbar color)
+      secondary_color = "#ffd166",        # VMI Yellow (hover color)
       accent_color = "#f5f5f5"           # Light gray
     ),
     
@@ -607,7 +607,7 @@ get_florida_config <- function() {
     # FTP Configuration for Data Sync (from Florida automated_data_sync.R)
     ftp = list(
       host = "ftp.trackmanbaseball.com",
-      username = "Florida Gators",
+      username = "Florida%20Gators",  # URL encoded
       password = "yWFB84w2eJ"
     ),
     
@@ -735,8 +735,8 @@ get_cbu_config <- function() {
       primary_logo = "CBUlogo.png",        # CBU logo
       secondary_logo = "PCUlogo.png",      # PCU logo (right side)
       navbar_theme = "inverse",            # Bootstrap navbar theme
-      primary_color = "#003366",          # CBU Blue
-      secondary_color = "#FFD700",        # CBU Gold
+      primary_color = "#C8A882",          # CBU Gold (actual navbar color)
+      secondary_color = "#003366",        # CBU Blue  
       accent_color = "#f5f5f5"           # Light gray
     ),
     
@@ -843,8 +843,8 @@ get_creighton_config <- function() {
       primary_logo = "CREIGHTONlogo.png",  # Creighton logo
       secondary_logo = "PCUlogo.png",      # PCU logo (right side)
       navbar_theme = "inverse",            # Bootstrap navbar theme
-      primary_color = "#003366",          # Creighton Blue
-      secondary_color = "#FFFFFF",        # White
+      primary_color = "#005EB8",          # Creighton Dark Blue (active navbar)
+      secondary_color = "#00A3E0",        # Creighton Light Blue (hover color)
       accent_color = "#f5f5f5"           # Light gray
     ),
     
@@ -957,8 +957,8 @@ get_unm_config <- function() {
       primary_logo = "UNMlogo.png",        # UNM logo
       secondary_logo = "PCUlogo.png",      # PCU logo (right side)
       navbar_theme = "inverse",            # Bootstrap navbar theme
-      primary_color = "#BA0C2F",          # UNM Cherry Red
-      secondary_color = "#C4D600",        # UNM Turquoise
+      primary_color = "#c1121f",          # UNM Red (actual navbar color)
+      secondary_color = "#C4D600",        # UNM Turquoise/Gold
       accent_color = "#f5f5f5"           # Light gray
     ),
     

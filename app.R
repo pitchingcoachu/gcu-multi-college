@@ -6547,8 +6547,8 @@ mod_camps_server <- function(id, is_active = shiny::reactive(TRUE)) {
       if (!length(all_dates)) return()
       first_date <- min(all_dates, na.rm = TRUE)
       last_date  <- max(all_dates, na.rm = TRUE)
-      if (is.finite(first_date) && is.finite(last_date)) {
-        updateDateRangeInput(session, "dates", start = first_date, end = last_date)
+      if (is.finite(last_date)) {
+        updateDateRangeInput(session, "dates", start = last_date, end = last_date)
       }
     })
     
@@ -7797,8 +7797,8 @@ mod_leader_server <- function(id, is_active = shiny::reactive(TRUE), global_date
       base <- team_base()
       first_date <- suppressWarnings(min(base$Date, na.rm = TRUE))
       last_date  <- suppressWarnings(max(base$Date, na.rm = TRUE))
-      if (is.finite(first_date) && is.finite(last_date)) {
-        updateDateRangeInput(session, "dates", start = first_date, end = last_date)
+      if (is.finite(last_date)) {
+        updateDateRangeInput(session, "dates", start = last_date, end = last_date)
       }
     })
     
