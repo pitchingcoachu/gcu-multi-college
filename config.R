@@ -160,7 +160,7 @@ get_gcu_config <- function() {
     # Data Processing Configuration
     data_config = list(
       # Date filtering - start date for data inclusion
-      start_date = as.Date("2025-10-20"),
+      start_date = as.Date("2025-08-01"),
       
       # CSV exclusion patterns (files to skip during sync)
       csv_exclusions = c("playerpositioning"),
@@ -427,15 +427,19 @@ get_harvard_config <- function() {
     
     # Player Lists - Team Pitchers (sample from Harvard lookup table)
     allowed_pitchers = c(
-      "Abler, Andrew",
-      "Alagheband, Luca", 
-      "Burns, Will",
-      "Bergsma, Charley",
-      "Chen, Jason",
-      "Clark, Jack",
-      "Cleary, Charlie",
-      "Donovan, Brendan",
-      "Gochman, Jake"
+  "Abler, Andrew",
+  "Alagheband, Luca",
+  "Burns, Will",
+  "Bergsma, Charley",
+  "Colasante, Gio",
+  "Dowling, Brian",
+  "Gable, Brett",
+  "Kahn, Davis",
+  "McHugh, Ryan",
+  "Sams, Daniel",
+  "Sharma, Vedant",
+  "Smith, Jack",
+  "Tahnk, Owen"
     ),
     
     # Player Lists - Team Position Players  
@@ -460,7 +464,7 @@ get_harvard_config <- function() {
     # Data Processing Configuration
     data_config = list(
       # Date filtering - start date for data inclusion
-      start_date = as.Date("2025-10-20"),
+      start_date = as.Date("2025-08-01"),
       
       # CSV exclusion patterns (files to skip during sync)
       csv_exclusions = c("playerpositioning"),
@@ -557,7 +561,7 @@ get_vmi_config <- function() {
     # Data Processing Configuration
     data_config = list(
       # Date filtering - start date for data inclusion
-      start_date = as.Date("2025-10-20"),
+      start_date = as.Date("2025-08-01"),
       
       # CSV exclusion patterns (files to skip during sync)
       csv_exclusions = c("playerpositioning"),
@@ -671,7 +675,7 @@ get_florida_config <- function() {
     # Data Processing Configuration
     data_config = list(
       # Date filtering - start date for data inclusion
-      start_date = as.Date("2025-10-20"),
+      start_date = as.Date("2025-08-01"),
       
       # CSV exclusion patterns (files to skip during sync)
       csv_exclusions = c("playerpositioning"),
@@ -776,7 +780,7 @@ get_cbu_config <- function() {
     # Data Processing Configuration
     data_config = list(
       # Date filtering - start date for data inclusion
-      start_date = as.Date("2025-10-20"),
+      start_date = as.Date("2025-08-01"),
       
       # CSV exclusion patterns (files to skip during sync)
       csv_exclusions = c("playerpositioning"),
@@ -885,7 +889,7 @@ get_creighton_config <- function() {
     # Data Processing Configuration
     data_config = list(
       # Date filtering - start date for data inclusion
-      start_date = as.Date("2025-10-20"),
+      start_date = as.Date("2025-08-01"),
       
       # CSV exclusion patterns (files to skip during sync)
       csv_exclusions = c("playerpositioning"),
@@ -953,26 +957,26 @@ get_unm_config <- function() {
     
     # Player Lists - Team Pitchers
     allowed_pitchers = c(
-      "White, Tommy",
-      "Alvarez, Diego",
-      "Woltz, Ethin",
-      "Nance, Carson",
-      "Hanson, Liam",
-      "Green, Cooper",
-      "Montoya, Ethan",
-      "Vaca, JP",
-      "Gonzalez, Isaiah",
-      "Brauer, Garrett",
-      "Allison, Carson",
-      "Gallegos, Gabe",
-      "Dufault, Kade",
-      "Guzman, Sebastian",
-      "Majerus, Bennett",
-      "Apodaca, Antonio",
-      "Cline, Evan",
-      "Wilcox, Liam",
-      "McAleer, Jake",
-      "Groshans, Jordan"
+  "White, Tommy",
+  "Alvarez, Diego",
+  "Woltz, Ethin",
+  "Cornelius, Matt",
+  "Grubbs, Talor",
+  "Romero, Matt",
+  "Jackson, Samuel",
+  "Mogen, Cristian",
+  "Corkrean, Cooper",
+  "Barnett, Logan",
+  "Lee, Seth",
+  "Cunningham, Ty",
+  "Wiseman, Luke",
+  "Barnhouse, Josh",
+  "Do, Tyler",
+  "Lehmbeck, Blake",
+  "Castillo, Ryan",
+  "Edgerton, Seth",
+  "Gergen, Jacob",
+  "Jacobson, Reid"
     ),
     
     # Player Lists - Team Position Players  
@@ -992,7 +996,7 @@ get_unm_config <- function() {
     # Data Processing Configuration
     data_config = list(
       # Date filtering - start date for data inclusion
-      start_date = as.Date("2025-10-20"),
+      start_date = as.Date("2025-08-01"),
       
       # CSV exclusion patterns (files to skip during sync)
       csv_exclusions = c("playerpositioning"),
