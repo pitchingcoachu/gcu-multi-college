@@ -29,6 +29,14 @@ if (!nzchar(school_code)) {
   cat("Using school code:", school_code, "\n")
 }
 
+# Validate school code
+valid_schools <- c("GCU", "HARVARD", "VMI", "FLORIDA", "CBU", "CREIGHTON", "UNM")
+if (!toupper(school_code) %in% valid_schools) {
+  cat("WARNING: Unknown school code '", school_code, "'. Valid schools are:", paste(valid_schools, collapse = ", "), "\n")
+  cat("Falling back to GCU configuration.\n")
+  school_code <- "GCU"
+}
+
 # Load and apply school configuration
 tryCatch({
   school_config <- load_school_config(school_code)
