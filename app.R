@@ -10337,8 +10337,8 @@ ui <- tagList(
   # --- Custom navbar colors & styling ---
   tags$head(
     tags$style(HTML(paste0("
-      /* Black navbar */
-      .navbar-inverse { background-color:#000000; border-color:#000000; }
+      /* School-branded navbar */
+      .navbar-inverse { background-color:", SCHOOL_CONFIG$branding$primary_color, "; border-color:", SCHOOL_CONFIG$branding$primary_color, "; }
       .navbar { position:relative; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
 
       /* Brand area with two logos side-by-side (left side) */
@@ -10427,9 +10427,9 @@ ui <- tagList(
     #openNote.btn-note:focus,
     #openNote.btn-note:active,
     #openNote.btn-note:active:focus {
-      background-color:#000000;   /* hover/active */
-      border-color:#ffffff;
-      color:#fff;
+      background-color:#ffffff;   /* hover/active - white for universal contrast */
+      border-color:", SCHOOL_CONFIG$branding$primary_color, ";
+      color:", SCHOOL_CONFIG$branding$primary_color, ";
       outline:none;
     }
   "))),
